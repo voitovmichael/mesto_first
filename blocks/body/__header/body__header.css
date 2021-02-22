@@ -1,0 +1,10 @@
+.body__header {
+    margin: 0 auto 40px;
+}
+
+@media screen and (max-width: 1279.5px)
+{
+  .body__header {
+    margin-bottom: 42px;
+  }
+}
