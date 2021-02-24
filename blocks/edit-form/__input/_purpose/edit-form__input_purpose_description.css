@@ -1,0 +1,9 @@
+.edit-form__input_purpose_description {
+  margin-bottom: 48px;
+}
+
+@media screen and (max-width: 767.5px) {
+  .edit-form__input_purpose_description {
+    margin-bottom: 45px;
+  }
+}

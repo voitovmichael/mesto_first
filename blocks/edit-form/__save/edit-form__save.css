@@ -1,0 +1,18 @@
+.edit-form__save {
+  padding: 0;
+  min-height: 50px;
+  background-color: #000;
+  font-family: 'Inter', 'Arial', 'Helvetica';
+  font-size: 18px;
+  line-height: 1.21;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+}
+
+@media screen and (max-width: 767.5px) {
+  .edit-form__save {
+    min-height: 46px;
+    font-size: 14px;
+  }
+}

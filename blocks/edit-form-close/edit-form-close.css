@@ -1,0 +1,20 @@
+.edit-form-close {
+  width: 40px;
+  height: 40px;
+  background-image: url(../../images/footer/close-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  align-self: center;
+  padding: 0;
+  border: none;
+  background-color: #000;
+  margin-left: 475px;
+}
+
+@media screen and (max-width: 767.5px) {
+  .edit-form-close {
+    width: 26px;
+    height: 26px;
+    margin: 0 0 13.6px 252px;
+  }
+}
