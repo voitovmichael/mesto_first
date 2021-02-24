@@ -12,6 +12,7 @@
 
 /*main*/
 @import url(../blocks/main/__profile/main__profile.css);
+@import url(../blocks/main/__elements/main__elements.css);
 
 /*profile*/
 @import url(../blocks/profile/profile.css);
@@ -23,3 +24,12 @@
 @import url(../blocks/profile/__description/profile__description.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/profile/__add-button-image/profile__add-button-image.css);
+
+/*elements*/
+@import url(../blocks/elements/elements.css);
+@import url(../blocks/elements/__list/elements__list.css);
+@import url(../blocks/element/element.css);
+@import url(../blocks/element/__image/element__image.css);
+@import url(../blocks/element/__group/element__group.css);
+@import url(../blocks/element/__name/element__name.css);
+@import url(../blocks/element/__like/element__like.css);
