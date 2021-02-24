@@ -1,7 +1,7 @@
-.edit-form-close {
+.popup__close-button {
   width: 40px;
   height: 40px;
-  background-image: url(../../images/footer/close-icon.svg);
+  background-image: url(../../../images/popup/close-icon.svg);
   background-repeat: no-repeat;
   background-position: center;
   align-self: center;
@@ -12,7 +12,7 @@
 }
 
 @media screen and (max-width: 767.5px) {
-  .edit-form-close {
+  .popup__close-button {
     width: 26px;
     height: 26px;
     margin: 0 0 13.6px 252px;

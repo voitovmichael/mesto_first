@@ -1,4 +1,4 @@
-.edit-form__save {
+.popup__save {
   padding: 0;
   min-height: 50px;
   background-color: #000;
@@ -11,7 +11,7 @@
 }
 
 @media screen and (max-width: 767.5px) {
-  .edit-form__save {
+  .popup__save {
     min-height: 46px;
     font-size: 14px;
   }

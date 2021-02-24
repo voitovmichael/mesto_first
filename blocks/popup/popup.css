@@ -1,4 +1,4 @@
-.edit-form-overlay {
+.popup {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
 }
 
 @media screen and (max-width: 767.5px) {
-  .edit-form-overlay {
+  .popup {
     top: 72.62px
   }
 }
