@@ -1,14 +1,18 @@
 .popup {
-  position: absolute;
-  display: flex;
+  position: fixed;
+  display: none;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  top: 146.72px;
+  height: 100%;
+  top: 0;
+  padding-top: 146.72px;
+  background-color: rgba(0, 0, 0, .5);
+  /* opacity: .5; */
 }
 
 @media screen and (max-width: 767.5px) {
   .popup {
-    top: 72.62px
+    padding-top: 72.62px
   }
 }
