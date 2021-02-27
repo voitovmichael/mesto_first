@@ -10,26 +10,17 @@
     <header class="header body__header">
       <img class="header__logo" src="./images/header/logo.svg" alt="Логотип сайта Mesto">
     </header>
-    <section class="popup">
-      <button class="popup__close-button"></button>
-      <form class="popup__container edit-form">
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__input popup__input_purpose_name" type="text" value="">
-        <input class="popup__input popup__input_purpose_description" type="text" value="">
-        <input class="popup__save" type="submit" value="Сохранить">
-      </form>
-    </section>
     <main class="main">
       <section class="profile main__profile">
-        <figure class="profile__main-info">
+        <div class="profile__main-info">
           <img class="profile__avatar" src="./images/profile/Avatar.png" alt="аватар профиля">
-          <figcaption class="profile__info">
+          <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit"></button>
+            <button class="profile__edit" type="button" aria-label="Edit"></button>
             <p class="profile__description">Исследователь океана</p>
-          </figcaption>
-        </figure>
-        <button class="profile__add-button">
+          </div>
+        </div>
+        <button class="profile__add-button" type="button" aria-label="Add">
         </button>
       </section>
       <section class="elements main__elements">
@@ -38,42 +29,42 @@
             <img class="element__image" src="./images/elements/karachaevo.jpg" alt="Фото Карачаево-Черкессии">
             <div class="element__group">
               <h2 class="element__name">Карачаевск</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="button" aria-label="Like"></button>
             </div>
           </li>
           <li class="element">
             <img class="element__image" src="./images/elements/elbrus.jpg" alt="Гора Эльбрус">
             <div class="element__group">
               <h2 class="element__name">Гора Эльбрус</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="button" aria-label="Like"></button>
             </div>
           </li>
           <li class="element">
             <img class="element__image" src="./images/elements/dombai.jpg" alt="Домбай">
             <div class="element__group">
               <h2 class="element__name">Домбай</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="button" aria-label="Like"></button>
             </div>
           </li>
           <li class="element">
             <img class="element__image" src="./images/elements/elbrus.jpg" alt="Гора Эльбрус">
             <div class="element__group">
               <h2 class="element__name">Гора Эльбрус</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="button" aria-label="Like"></button>
             </div>
           </li>
           <li class="element">
             <img class="element__image" src="./images/elements/dombai.jpg" alt="Домбай">
             <div class="element__group">
               <h2 class="element__name">Домбай</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="button" aria-label="Like"></button>
             </div>
           </li>
           <li class="element">
             <img class="element__image" src="./images/elements/karachaevo.jpg" alt="Фото Карачаево-Черкессии">
             <div class="element__group">
               <h2 class="element__name">Карачаево-Черкессия</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="button" aria-label="Like"></button>
             </div>
           </li>
         </ul>
@@ -82,6 +73,15 @@
     <footer class="footer body__footer">
       &copy;2020 Mesto Russia
     </footer>
+    <section class="popup">
+      <button class="popup__close-button" type="reset" aria-label="Close"></button>
+      <form class="popup__container edit-form" name="profileEditor">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input class="popup__input popup__input_purpose_name" name="profileEditor-name" type="text" value="">
+        <input class="popup__input popup__input_purpose_description" name="profileEditor-description" type="text" value="">
+        <button class="popup__save" type="submit">Сохранить</button>
+      </form>
+    </section>
+    <script src="scripts/popup.js"></script>
   </body>
-  <script src="scripts/popup.js"></script>
 </html>

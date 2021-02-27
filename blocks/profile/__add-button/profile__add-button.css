@@ -5,11 +5,17 @@
   background-image: url(../../../images/profile/profile-add.svg);
   background-repeat: no-repeat;
   background-position: center;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
+  border-radius: 2px;
+}
+
+.profile__add-button:hover {
+  opacity: .6;
 }
 
 @media screen and (max-width: 424.5px) {
   .profile__add-button {
     width: 100%;
+    background-size: 16px 16px;
   }
 }
