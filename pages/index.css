@@ -47,3 +47,6 @@
 
 /*footer*/
 @import url(../blocks/footer/footer.css);
+
+/*template*/
+@import url(../blocks/template/template.css);

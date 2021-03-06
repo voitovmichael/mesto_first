@@ -82,13 +82,24 @@
     <footer class="footer body__footer">
       &copy;2020 Mesto Russia
     </footer>
-    <section class="popup">
+    <section class="popup edit-popup">
       <button class="popup__close-button" type="reset" aria-label="Close"></button>
       <form class="popup__container edit-form" name="profileEditor">
         <h2 class="popup__title">Редактировать профиль</h2>
         <input class="popup__input popup__input_purpose_name" name="profileEditor-name" type="text" value="">
         <input class="popup__input popup__input_purpose_description" name="profileEditor-description" type="text" value="">
         <button class="popup__save" type="submit">Сохранить</button>
+      </form>
+    </section>
+
+    <section class="popup add-popup">
+      <button class="popup__close-button" type="reset" aria-label="Close"></button>
+      <form class="popup__container add-form" name="profileEditor">
+        <h2 class="popup__title">Новое место</h2>
+        <input class="popup__input popup__input_purpose_name" name="profileEditor-name" type="text" value="" placeholder="Название">
+        <input class="popup__input popup__input_purpose_description" name="profileEditor-description" type="text" value="" 
+          placeholder="Ссылка на картинку">
+        <button class="popup__save" type="submit">Создать</button>
       </form>
     </section>
     <script src="scripts/popup.js"></script>
