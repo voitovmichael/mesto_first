@@ -12,7 +12,7 @@ let profileName = document.querySelector('.profile__name');
 let profileDescription = document.querySelector('.profile__description');
 let elementsList = document.querySelector('.elements__list');
 const elementTemplate = document.querySelector('.element-template').content;
-
+debugger;
 const initialCards = [
   {
     name: 'Архыз',
@@ -106,7 +106,12 @@ function createElemnt(name, link) {
   const element = elementTemplate.querySelector('.element').cloneNode(true);
   element.querySelector('.element__name').textContent = name;
   element.querySelector('.element__image').src = link;
+  element.querySelector('.element__like').addEventListener('click', clickLike)
   return element
+}
+
+function clickLike (evt) {
+  evt.target.classList.toggle('element__like_active');
 }
 
 //вызываем фунцию рендера для первых 6 элементов
@@ -121,3 +126,6 @@ popupSaveButton.addEventListener('submit', saveForm);
 popupCloseButtons.forEach( item => item.addEventListener('click', closePopup));
 // вешаем обработчик на событие отправки формы добавления карточки
 popupCreateElement.addEventListener('submit', saveAddForm);
+//вешаем обработчик на нажатие кнопки Like
+// elementLikeButton.addEventListener('click', clickLike);
+
