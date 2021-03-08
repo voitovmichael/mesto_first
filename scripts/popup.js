@@ -12,7 +12,7 @@ let profileName = document.querySelector('.profile__name');
 let profileDescription = document.querySelector('.profile__description');
 let elementsList = document.querySelector('.elements__list');
 const elementTemplate = document.querySelector('.element-template').content;
-debugger;
+const deleteButton = elementTemplate.querySelector('.element__delete-button');
 const initialCards = [
   {
     name: 'Архыз',
@@ -107,11 +107,19 @@ function createElemnt(name, link) {
   element.querySelector('.element__name').textContent = name;
   element.querySelector('.element__image').src = link;
   element.querySelector('.element__like').addEventListener('click', clickLike)
+  element.querySelector('.element__delete-button').addEventListener('click', deleteElement)
   return element
 }
 
+//метод для обработки нажатия на кнопку Like
 function clickLike (evt) {
   evt.target.classList.toggle('element__like_active');
+}
+
+//метод обработки удаления карточки
+function deleteElement (evt) {
+  let element = evt.target.closest('.element');
+  element.remove();
 }
 
 //вызываем фунцию рендера для первых 6 элементов
@@ -127,5 +135,4 @@ popupCloseButtons.forEach( item => item.addEventListener('click', closePopup));
 // вешаем обработчик на событие отправки формы добавления карточки
 popupCreateElement.addEventListener('submit', saveAddForm);
 //вешаем обработчик на нажатие кнопки Like
-// elementLikeButton.addEventListener('click', clickLike);
 
