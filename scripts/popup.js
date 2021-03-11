@@ -85,7 +85,7 @@ function openPopup (evt) {
   }
 
   if(evt.target.className === 'element__image') {
-    popup.querySelector('.popup__container_type_image').src = evt.target.closest('.element').querySelector('.element__image').src;
+    popup.querySelector('.popup__image').src = evt.target.closest('.element').querySelector('.element__image').src;
     popup.querySelector('.popup__figcaption').textContent = evt.target.closest('.element').querySelector('.element__name').textContent;
   }
 
