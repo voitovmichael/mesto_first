@@ -2,12 +2,11 @@
 //popup, кнопку редактирования профиля, кнопку закрытия формы, саму форму,
 // имя профиля, описание профиля, input для вода имени, input для ввода описания
 let popup;
-let profileEdit = document.querySelector('.profile__edit');
-// const addPopup = document.querySelector('.add-popup');
+const profileEdit = document.querySelector('.profile__edit');
 const popupAddButton = document.querySelector('.profile__add-button');
-let popupCloseButtons = document.querySelectorAll('.popup__close-button');
-let popupSaveButton = document.querySelector('.popup__container');
-let popupCreateElement = document.querySelector('.popup__container_type_add');
+const popupCloseButtons = document.querySelectorAll('.popup__close-button');
+const popupSaveButton = document.querySelector('.popup__container');
+const popupCreateElement = document.querySelector('.popup__container_type_add');
 let profileName = document.querySelector('.profile__name');
 let profileDescription = document.querySelector('.profile__description');
 let elementsList = document.querySelector('.elements__list');
@@ -55,8 +54,9 @@ const popupsButton = [
 //Метож для инициализации первых шести карточек
 
 function renderDefaultElements () {
+  let element;
   initialCards.forEach (item => {  
-    let element = createElemnt(item.name, item.link);
+    element = createElemnt(item.name, item.link);
     elementsList.append(element);
   })
 }
@@ -69,8 +69,6 @@ function openPopup (evt) {
   });
   popup = document.querySelector(popupClass[evt.target.className]);
   popup.classList.add('popup_opened');
-  // let inputName = popup.querySelector('.popup__input_purpose_name');
-  // let inputDescription = popup.querySelector('.popup__input_purpose_description');
   
   if(evt.target.className === 'profile__edit') {
     popup.querySelector('.popup__input_purpose_name').value = profileName.textContent;
@@ -84,18 +82,13 @@ function openPopup (evt) {
     inputDescription.value = '';
     inputName.placeholder = 'Название'
     inputDescription = 'Ссылка на картинку';
-    // popup.querySelector('.popup__input_purpose_description').value = ' ';
   }
 
   if(evt.target.className === 'element__image') {
-    // let elementName = evt.target.closest('.element').querySelector('.element__name');
     popup.querySelector('.popup__container_type_image').src = evt.target.closest('.element').querySelector('.element__image').src;
     popup.querySelector('.popup__figcaption').textContent = evt.target.closest('.element').querySelector('.element__name').textContent;
   }
-  // else {
-  //   inputName.value = '';
-  //   inputDescription.value = '';
-  // }
+
 }
 
 //метод для обработки отправки формы
@@ -115,7 +108,6 @@ function closePopup () {
 function saveAddForm (evt) {
   evt.preventDefault();
   const elementForm = document.querySelector('.popup__container_type_add');
-  const elementName = elementForm.querySelector('.popup__input_purpose_name').value;
   let element = createElemnt(elementForm.querySelector('.popup__input_purpose_name').value, 
     elementForm.querySelector('.popup__input_purpose_description').value);
   elementsList.prepend(element);
