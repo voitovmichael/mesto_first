@@ -7,7 +7,7 @@ let profileEdit = document.querySelector('.profile__edit');
 const popupAddButton = document.querySelector('.profile__add-button');
 let popupCloseButtons = document.querySelectorAll('.popup__close-button');
 let popupSaveButton = document.querySelector('.popup__container');
-let popupCreateElement = document.querySelector('.add-form')
+let popupCreateElement = document.querySelector('.popup__container_type_add');
 let profileName = document.querySelector('.profile__name');
 let profileDescription = document.querySelector('.profile__description');
 let elementsList = document.querySelector('.elements__list');
@@ -42,10 +42,13 @@ const initialCards = [
 
 const popupsButton = [
   {
-    'profile__add-button': '.add-popup'
+    'profile__add-button': '.popup_type_add'
   },
   {
-    'profile__edit': '.edit-popup'
+    'profile__edit': '.popup_type_edit'
+  },
+  {
+    'element__image': '.popup_type_image'
   }
 ]
 
@@ -63,18 +66,36 @@ function openPopup (evt) {
   let popupClass = popupsButton.find(item => {
     if(item[evt.target.className])
       return item[evt.target.className]
-  })
+  });
   popup = document.querySelector(popupClass[evt.target.className]);
   popup.classList.add('popup_opened');
-  let inputName = popup.querySelector('.popup__input_purpose_name');
-  let inputDescription = popup.querySelector('.popup__input_purpose_description');
+  // let inputName = popup.querySelector('.popup__input_purpose_name');
+  // let inputDescription = popup.querySelector('.popup__input_purpose_description');
+  
   if(evt.target.className === 'profile__edit') {
-    inputName.value = profileName.textContent;
-    inputDescription.value = profileDescription.textContent;
-  } else {
+    popup.querySelector('.popup__input_purpose_name').value = profileName.textContent;
+    popup.querySelector('.popup__input_purpose_description').value = profileDescription.textContent;
+  }
+
+  if(evt.target.className === 'profile__add-button') {
+    let inputName = popup.querySelector('.popup__input_purpose_name');
+    let inputDescription = popup.querySelector('.popup__input_purpose_description');
     inputName.value = '';
     inputDescription.value = '';
+    inputName.placeholder = 'Название'
+    inputDescription = 'Ссылка на картинку';
+    // popup.querySelector('.popup__input_purpose_description').value = ' ';
   }
+
+  if(evt.target.className === 'element__image') {
+    // let elementName = evt.target.closest('.element').querySelector('.element__name');
+    popup.querySelector('.popup__container_type_image').src = evt.target.closest('.element').querySelector('.element__image').src;
+    popup.querySelector('.popup__figcaption').textContent = evt.target.closest('.element').querySelector('.element__name').textContent;
+  }
+  // else {
+  //   inputName.value = '';
+  //   inputDescription.value = '';
+  // }
 }
 
 //метод для обработки отправки формы
@@ -93,7 +114,7 @@ function closePopup () {
 //метод для обработки отправки формы добавления карточки
 function saveAddForm (evt) {
   evt.preventDefault();
-  const elementForm = document.querySelector('.add-form');
+  const elementForm = document.querySelector('.popup__container_type_add');
   const elementName = elementForm.querySelector('.popup__input_purpose_name').value;
   let element = createElemnt(elementForm.querySelector('.popup__input_purpose_name').value, 
     elementForm.querySelector('.popup__input_purpose_description').value);
@@ -105,9 +126,12 @@ function saveAddForm (evt) {
 function createElemnt(name, link) {
   const element = elementTemplate.querySelector('.element').cloneNode(true);
   element.querySelector('.element__name').textContent = name;
-  element.querySelector('.element__image').src = link;
+  const elementImage = element.querySelector('.element__image');
+  elementImage.src = link;
+  elementImage.alt = `Фото: ${name}`;
+  elementImage.addEventListener('click', openPopup);
   element.querySelector('.element__like').addEventListener('click', clickLike)
-  element.querySelector('.element__delete-button').addEventListener('click', deleteElement)
+  element.querySelector('.element__delete-button').addEventListener('click', deleteElement);
   return element
 }
 
