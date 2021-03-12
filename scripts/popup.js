@@ -69,15 +69,15 @@ function openPopup (evt) {
   });
   popup = document.querySelector(popupClass[evt.target.className]);
   popup.classList.add('popup_opened');
+  let inputName = popup.querySelector('.popup__input_purpose_name');
+  let inputDescription = popup.querySelector('.popup__input_purpose_description');
   
   if(evt.target.className === 'profile__edit') {
-    popup.querySelector('.popup__input_purpose_name').value = profileName.textContent;
-    popup.querySelector('.popup__input_purpose_description').value = profileDescription.textContent;
+    inputName.value = profileName.textContent;
+    inputDescription.value = profileDescription.textContent;
   }
 
   if(evt.target.className === 'profile__add-button') {
-    let inputName = popup.querySelector('.popup__input_purpose_name');
-    let inputDescription = popup.querySelector('.popup__input_purpose_description');
     inputName.value = '';
     inputDescription.value = '';
     inputName.placeholder = 'Название'
@@ -93,6 +93,8 @@ function openPopup (evt) {
 
 //метод для обработки отправки формы
 function saveForm(evt) {
+  let inputName = document.querySelector('.popup__input_purpose_name');
+  let inputDescription = document.querySelector('.popup__input_purpose_description');
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileDescription.textContent = inputDescription.value;
