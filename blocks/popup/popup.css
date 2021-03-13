@@ -11,7 +11,7 @@
   grid-template-columns: max-content 40px;
   grid-template-rows: 40px 330px;
   justify-content: center;
-  transition: visibility 0s linear, opacity 1s linear;
+  transition: visibility .3s linear, opacity .3s linear;
 }
 
 @media screen and (max-width: 767.5px) {
