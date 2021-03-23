@@ -1,6 +1,7 @@
 // присвоим перемменым элементы формы: 
 //popup, кнопку редактирования профиля, кнопку закрытия формы, саму форму,
 // имя профиля, описание профиля, input для вода имени, input для ввода описания
+const popupList = Array.from(document.querySelectorAll('.popup'));
 const profileEdit = document.querySelector('.profile__edit');
 const popupAddButton = document.querySelector('.profile__add-button');
 const editForm = document.querySelector('.popup__container_type_edit');
@@ -137,6 +138,18 @@ const enableValidation = ({formSelector, submitButtonSelector, inputSelector}) =
   });
 }
 
+const closeOverlayByClick = (evt, popup) => {
+  const classList = Array.from(evt.target.classList);
+  if(classList.includes('popup')){//|| evt.keyCode === 27) {//vt.keyCode: 27
+    closePopup(popup);
+  }
+}
+
+const closeOverlayByEsc = (evt, popup) => {
+  if(evt.keyCode === 27)
+    closePopup(popup);
+}
+
 //Метож для инициализации первых шести карточек
 function renderDefaultElements () {
   let element;
@@ -177,6 +190,7 @@ function openPopupImage(imageLink,  imageName) {
 //метод открытия popup-a
 function openPopup (popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keyup', (evt) => closeOverlayByEsc(evt, popup));
 }
 
 //метод для обработки отправки формы
@@ -244,5 +258,9 @@ editForm.addEventListener('submit', saveEditForm);
 popupCloseButtonsImage.forEach(item => item.addEventListener('click', () => closePopup(popupTypeImage)));
 // вешаем обработчик на событие отправки формы добавления карточки
 addForm.addEventListener('submit', saveAddForm);
-//вешаем обработчик на нажатие кнопки Like
+//вешаем обработчик на нажатие по overlay
+popupList.forEach((popup) => {
+  popup.addEventListener('click', (evt) => closeOverlayByClick(evt, popup));
+  popup.addEventListener('keyup', (evt) => closeOverlayByEsc(evt, popup));
+});
 
