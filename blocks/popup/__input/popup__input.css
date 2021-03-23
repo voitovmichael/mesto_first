@@ -13,9 +13,7 @@
 }
 
 .popup__input::placeholder {
-  color: red;
-  font-size: 1.2em;
-  font-style: italic;
+  color: rgba(196, 196, 196, 1);
 }
 
 .popup__input:nth-of-type(2) {
