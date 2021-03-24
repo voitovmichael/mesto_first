@@ -52,92 +52,6 @@ const initialCards = [
   }
 ]; 
 
-const objFormParams = {
-  formSelector: '.popup__container',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-}
-
-//методы для валидации формы
-const showError = (formElement, inputElement) => {
-  inputElement.classList.add('popup__input_error');
-  const errorElemnt = formElement.querySelector(`.${inputElement.name}-placeholder`);
-  errorElemnt.textContent = inputElement.validationMessage;
-  errorElemnt.classList.add('popup__input-error_active');
-  
-}
-
-const hideError = (formElement, inputElement) => {
-  inputElement.classList.remove('popup__input_error');
-  const errorElemnt = formElement.querySelector(`.${inputElement.name}-placeholder`);
-  errorElemnt.classList.remove('popup__input-error_active');
-}
-
-const checkInputInValid = (inputElement) => {
-  return !inputElement.validity.valid
-}
-
-// метод управляет активностью кнопки формы в зависимости от заполненности её input-ов
-const toggleButtonState = (formSaveButton, inputList) => {
-  let isInputvalid = !inputList.some((inputElement) => {
-    return checkInputInValid(inputElement);
-  });
-  if(isInputvalid) {
-    formSaveButton.classList.add('popup__save_active');
-    formSaveButton.removeAttribute('disabled');
-  }
-  else {
-    formSaveButton.classList.remove('popup__save_active');
-    formSaveButton.setAttribute('disabled', true);
-  }
-
-}
-
-// метод навешивает слушателя с событием input на форму
-const setEventListener = (formElement, submitButtonSelector, inputSelector) => {
-  const formSaveButton = formElement.querySelector(submitButtonSelector);
-  const inputElementList = Array.from(formElement.querySelectorAll(inputSelector));
-  formElement.addEventListener('input', (evt) => {
-    if(evt.target.classList.value.includes('popup__input')) {
-      checkInputInValid(evt.target) ? showError(formElement, evt.target) : hideError(formElement, evt.target);
-      toggleButtonState(formSaveButton, inputElementList);
-    }
-  });
-  // const formSaveButton = formElement.querySelector('.popup__save');
-
-}
-
-// проверяем список input-ов на валидность
-const checkFormElements = (formElement, submitButtonSelector, inputSelector) => {
-    const formSaveButton = formElement.querySelector(submitButtonSelector);
-    const inputElementList = Array.from(formElement.querySelectorAll(inputSelector));
-    if(inputElementList.length > 0) {
-      // checkAllInputElements(formElement, inputElementList);
-      inputElementList.forEach((inputElement) => {
-        checkInputInValid(inputElement) ? showError(formElement, inputElement) : hideError(formElement, inputElement);
-      });
-      toggleButtonState(formSaveButton, inputElementList);
-}
-}
-
-const enableValidation = ({formSelector, submitButtonSelector, inputSelector}) => {
-  const forms = Array.from(document.querySelectorAll(formSelector));
-  forms.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-    // const formSaveButton = formElement.querySelector(submitButtonSelector);
-    // const inputElementList = Array.from(formElement.querySelectorAll(inputSelector));
-    // if(inputSelector && inputElementList.length > 0) {
-      checkFormElements(formElement, submitButtonSelector, inputSelector);
-      // inputElementList.forEach((inputElement) => {
-      //   checkInputInValid(inputElement) ? showError(formElement, inputElement) : hideError(formElement, inputElement);
-      // })
-      setEventListener(formElement, submitButtonSelector, inputSelector);
-      
-  });
-}
-
 const closeOverlayByClick = (evt, popup) => {
   const classList = Array.from(evt.target.classList);
   if(classList.includes('popup')){//|| evt.keyCode === 27) {//vt.keyCode: 27
@@ -163,11 +77,6 @@ function renderDefaultElements () {
 function openPopupFormEdit (popup) {
   profileNameInput.value = profileName.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  // const inputElementList = Array.from(popup.querySelector(objFormParams.inputSelector));
-  // const formSaveButton = popup.querySelector(objFormParams.submitButtonSelector);
-  const formElement = popup.querySelector(objFormParams.formSelector);
-  checkFormElements(formElement, objFormParams.submitButtonSelector, objFormParams.inputSelector);
-  // toggleButtonState(formSaveButton, inputElementList);
   openPopup(popup);
 }
 
@@ -175,8 +84,6 @@ function openPopupFormEdit (popup) {
 function openPopupFormAdd (popup) {
   placeNameInput.value = '';
   placeLinkInput.value = '';
-  const formElement = popup.querySelector(objFormParams.formSelector);
-  checkFormElements(formElement, objFormParams.submitButtonSelector, objFormParams.inputSelector);
   openPopup(popup);
 }
 
@@ -195,7 +102,6 @@ function openPopup (popup) {
 
 //метод для обработки отправки формы
 function saveEditForm(evt) {
-  // evt.preventDefault();
   profileName.textContent = profileNameInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
   closePopup(popupTypeEdit);
@@ -204,11 +110,12 @@ function saveEditForm(evt) {
 //метод закрытия формы
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keyup', (evt) => closeOverlayByEsc(evt, popup));
+  
 }
 
 //метод для обработки отправки формы добавления карточки
 function saveAddForm (evt) {
-  // evt.preventDefault();
   const element = createElemnt(placeNameInput.value, placeLinkInput.value);
   elementsList.prepend(element);
   closePopup(popupTypeAdd);
@@ -241,7 +148,6 @@ function deleteElement (evt) {
 
 //вызываем фунцию рендера для первых 6 элементов
 renderDefaultElements();
-enableValidation(objFormParams);
 
 // вешаем обработчик событие на нажатие кнопки редактирования профиля
 profileEdit.addEventListener('click', () => openPopupFormEdit(popupTypeEdit));
