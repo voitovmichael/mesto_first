@@ -25,6 +25,7 @@ const placeLinkInput = popupTypeAdd.querySelector('.popup__input_purpose_descrip
 
 const popupTypeImage = document.querySelector('.popup_type_image');
 const popupCloseButtonsImage = popupTypeImage.querySelectorAll('.popup__close-button');
+const ESC_CODE = 27;
 const initialCards = [
   {
     name: 'Архыз',
@@ -52,23 +53,26 @@ const initialCards = [
   }
 ]; 
 
-const closeOverlayByClick = (evt, popup) => {
-  const classList = Array.from(evt.target.classList);
-  if(classList.includes('popup')){//|| evt.keyCode === 27) {//vt.keyCode: 27
+const closeOverlayByEsc = (evt, popup) => {
+  if(evt.keyCode === ESC_CODE)
     closePopup(popup);
-  }
 }
 
-const closeOverlayByEsc = (evt, popup) => {
-  if(evt.keyCode === 27)
-    closePopup(popup);
+const checkForm = (popup) => {
+  const form = popup.querySelector('.popup__container');
+  const inputElements = Array.from(form.querySelectorAll('.popup__input'));
+  const formButton = popup.querySelector('.popup__save');
+  if(formButton)
+    toggleButtonState(formButton, inputElements, objFormParams);
+  inputElements.forEach((inputElement) => {
+    checkInputInValid(form, inputElement, objFormParams);
+  });
 }
 
 //Метож для инициализации первых шести карточек
 function renderDefaultElements () {
-  let element;
   initialCards.forEach (item => {  
-    element = createElemnt(item.name, item.link);
+    const element = createElemnt(item.name, item.link);
     elementsList.append(element);
   })
 }
@@ -82,14 +86,14 @@ function openPopupFormEdit (popup) {
 
 //метод обработки открытия формы редактирования профиля
 function openPopupFormAdd (popup) {
-  placeNameInput.value = '';
-  placeLinkInput.value = '';
+  addForm.reset();
   openPopup(popup);
 }
 
 // метод для обработки окрытия формы добавления карточки
-function openPopupImage(imageLink,  imageName) {
+function openPopupImage(imageLink,  imageName, alt) {
     popupImage.src = imageLink;
+    popupImage.alt = alt;
     popupFigcaption.textContent = imageName;
     openPopup(popupTypeImage);
 }
@@ -98,6 +102,7 @@ function openPopupImage(imageLink,  imageName) {
 function openPopup (popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keyup', (evt) => closeOverlayByEsc(evt, popup));
+  checkForm(popup);
 }
 
 //метод для обработки отправки формы
@@ -111,7 +116,7 @@ function saveEditForm(evt) {
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keyup', (evt) => closeOverlayByEsc(evt, popup));
-  
+  // checkForm(popup);
 }
 
 //метод для обработки отправки формы добавления карточки
@@ -128,7 +133,7 @@ function createElemnt(name, link) {
   const elementImage = element.querySelector('.element__image');
   elementImage.src = link;
   elementImage.alt = `Фото: ${name}`;
-  elementImage.addEventListener('click', () => openPopupImage(link, name));
+  elementImage.addEventListener('click', () => openPopupImage(link, name, elementImage.alt));
   element.querySelector('.element__like').addEventListener('click', clickLike)
   element.querySelector('.element__delete-button').addEventListener('click', deleteElement);
   return element
@@ -151,22 +156,17 @@ renderDefaultElements();
 
 // вешаем обработчик событие на нажатие кнопки редактирования профиля
 profileEdit.addEventListener('click', () => openPopupFormEdit(popupTypeEdit));
-//обработчик события закрытия формы редактирования профиля
-popupCloseButtonEdit.addEventListener('click', () => closePopup(popupTypeEdit));
 //вешаем обработчик событие на нажатие кнопки добавления карточки
 popupAddButton.addEventListener('click', () => openPopupFormAdd(popupTypeAdd));
-//обработчик события закрытия формы добавления карточки
-popupCloseButtonAdd.addEventListener('click', () => closePopup(popupTypeAdd));
 // вешаем обработчик событие на отправку формы
 editForm.addEventListener('submit', saveEditForm);
-// вешаем обработчик событие на закрытие формы
-//обработчик события закрытия формы редактирования профиля
-popupCloseButtonsImage.forEach(item => item.addEventListener('click', () => closePopup(popupTypeImage)));
 // вешаем обработчик на событие отправки формы добавления карточки
 addForm.addEventListener('submit', saveAddForm);
 //вешаем обработчик на нажатие по overlay
 popupList.forEach((popup) => {
-  popup.addEventListener('click', (evt) => closeOverlayByClick(evt, popup));
-  popup.addEventListener('keyup', (evt) => closeOverlayByEsc(evt, popup));
+  popup.addEventListener('click', (evt) => {
+    if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button'))
+      closePopup(popup);
+  });
 });
 

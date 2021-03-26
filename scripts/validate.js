@@ -25,14 +25,14 @@ const hideError = (formElement, inputElement, {inputError, inputErrorActive}) =>
 }
 
 //метод проверяет поле формы на валидность
-const checkInputInValid = (inputElement) => {
-  return !inputElement.validity.valid
+const checkInputInValid = (formElement, inputElement, rest) => {
+  !inputElement.validity.valid ? showError(formElement, inputElement, rest) : hideError(formElement, inputElement, rest);
 }
 
 // метод управляет активностью кнопки формы в зависимости от заполненности её input-ов
 const toggleButtonState = (formSaveButton, inputList, {saveButtonActive}) => {
-  let isInputvalid = !inputList.some((inputElement) => {
-    return checkInputInValid(inputElement);
+  const isInputvalid = !inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
   });
   if(isInputvalid) {
     formSaveButton.classList.add(saveButtonActive);
@@ -49,24 +49,14 @@ const toggleButtonState = (formSaveButton, inputList, {saveButtonActive}) => {
 const setEventListener = (formElement, {submitButtonSelector, inputSelector, ...rest}) => {
   const formSaveButton = formElement.querySelector(submitButtonSelector);
   const inputElementList = Array.from(formElement.querySelectorAll(inputSelector));
-  formElement.addEventListener('input', (evt) => {
-    if(evt.target.classList.value.includes('popup__input')) {
-      checkInputInValid(evt.target) ? showError(formElement, evt.target, rest) : hideError(formElement, evt.target, rest);
+  if(formSaveButton)
+    toggleButtonState(formSaveButton, inputElementList, rest);
+  inputElementList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      checkInputInValid(formElement, inputElement, rest);
       toggleButtonState(formSaveButton, inputElementList, rest);
-    }
-  });
-}
-
-// проверяем список input-ов на валидность
-const checkFormElements = (formElement, {submitButtonSelector, inputSelector, ...rest}) => {
-    const formSaveButton = formElement.querySelector(submitButtonSelector);
-    const inputElementList = Array.from(formElement.querySelectorAll(inputSelector));
-    if(inputElementList.length > 0) {
-      inputElementList.forEach((inputElement) => {
-        checkInputInValid(inputElement) ? showError(formElement, inputElement, rest) : hideError(formElement, inputElement, rest);
-      });
-      toggleButtonState(formSaveButton, inputElementList, rest);
-    }
+    });
+  })
 }
 
 //метод настраивает валидацию форм
@@ -76,18 +66,9 @@ const enableValidation = ({formSelector, ...rest}) => {
     formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
-      checkFormElements(formElement, rest);
-      setEventListener(formElement, rest);
-      
+
+      setEventListener(formElement, rest);  
   });
 }
 
-const openPopupForm = (popup) => {
-  const formElement = popup.querySelector(objFormParams.formSelector);
-  checkFormElements(formElement, objFormParams);
-}
-
 enableValidation(objFormParams);
-
-profileEdit.addEventListener('click', () => openPopupForm(popupTypeEdit));
-popupAddButton.addEventListener('click', () => openPopupForm(popupTypeAdd));
