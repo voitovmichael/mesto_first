@@ -65,7 +65,8 @@ const checkForm = (popup) => {
   if(formButton)
     toggleButtonState(formButton, inputElements, objFormParams);
   inputElements.forEach((inputElement) => {
-    checkInputInValid(form, inputElement, objFormParams);
+    hideError(form, inputElement, objFormParams);
+    // checkInputInValid(form, inputElement, objFormParams);
   });
 }
 
@@ -106,7 +107,7 @@ function openPopup (popup) {
 }
 
 //метод для обработки отправки формы
-function saveEditForm(evt) {
+function saveEditForm() {
   profileName.textContent = profileNameInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
   closePopup(popupTypeEdit);
@@ -120,7 +121,7 @@ function closePopup (popup) {
 }
 
 //метод для обработки отправки формы добавления карточки
-function saveAddForm (evt) {
+function saveAddForm () {
   const element = createElemnt(placeNameInput.value, placeLinkInput.value);
   elementsList.prepend(element);
   closePopup(popupTypeAdd);
