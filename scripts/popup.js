@@ -66,7 +66,6 @@ const checkForm = (popup) => {
     toggleButtonState(formButton, inputElements, objFormParams);
   inputElements.forEach((inputElement) => {
     hideError(form, inputElement, objFormParams);
-    // checkInputInValid(form, inputElement, objFormParams);
   });
 }
 
