@@ -29,12 +29,13 @@ export default class Card {
     evt.target.classList.toggle('element__like_active');
   }
 
-  //метод обработки удаления карточки
-_deleteElement (evt) {
-  const element = evt.target.closest('.element');
-  element.remove();
-}
+    //метод обработки удаления карточки
+  _deleteElement (evt) {
+    const element = evt.target.closest('.element');
+    element.remove();
+  }
 
+  // метод навешивает слушателей на события карточки места
   _addListenters() {
     // const elementImage = this._element.querySelector('.element__image');
     this._elementImage.addEventListener('click', () => this._openPopupImage(this._link, this._name));
@@ -42,12 +43,9 @@ _deleteElement (evt) {
     this._element.querySelector('.element__delete-button').addEventListener('click', (evt) => this._deleteElement(evt));
   }
 
+  //Метод возвращает элемент карточки
   getElement() {
     return this._element;
-  }
-
-  getElementImage() {
-    return this._elementImage;
   }
 
 }
