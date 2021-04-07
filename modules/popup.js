@@ -1,4 +1,5 @@
-// присвоим перемменым элементы формы: 
+import Card from './Card.js';
+// присвоим перемменым элементы формы:
 //popup, кнопку редактирования профиля, кнопку закрытия формы, саму форму,
 // имя профиля, описание профиля, input для вода имени, input для ввода описания
 const popupList = Array.from(document.querySelectorAll('.popup'));
@@ -9,22 +10,22 @@ const addForm = document.querySelector('.popup__container_type_add');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const elementsList = document.querySelector('.elements__list');
-const elementTemplate = document.querySelector('.element-template').content;
+// const elementTemplate = document.querySelector('.element-template').content;
 const popupImage = document.querySelector('.popup__image');
 const popupFigcaption = document.querySelector('.popup__figcaption');
 
 const popupTypeEdit = document.querySelector('.popup_type_edit');
-const popupCloseButtonEdit = popupTypeEdit.querySelector('.popup__close-button');
+// const popupCloseButtonEdit = popupTypeEdit.querySelector('.popup__close-button');
 const profileNameInput = popupTypeEdit.querySelector('.popup__input_purpose_name');
 const profileDescriptionInput = popupTypeEdit.querySelector('.popup__input_purpose_description');
 
 const popupTypeAdd = document.querySelector('.popup_type_add');
-const popupCloseButtonAdd = popupTypeAdd.querySelector('.popup__close-button');
+// const popupCloseButtonAdd = popupTypeAdd.querySelector('.popup__close-button');
 const placeNameInput = popupTypeAdd.querySelector('.popup__input_purpose_name');
 const placeLinkInput = popupTypeAdd.querySelector('.popup__input_purpose_description');
 
 const popupTypeImage = document.querySelector('.popup_type_image');
-const popupCloseButtonsImage = popupTypeImage.querySelectorAll('.popup__close-button');
+// const popupCloseButtonsImage = popupTypeImage.querySelectorAll('.popup__close-button');
 const ESC_CODE = 27;
 const initialCards = [
   {
@@ -51,12 +52,13 @@ const initialCards = [
     name: 'Байкал',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
-]; 
+];
 
 const closeOverlayByEsc = (evt, popup) => {
   if(evt.keyCode === ESC_CODE)
     closePopup(popup);
 }
+
 
 const checkForm = (popup) => {
   const form = popup.querySelector('.popup__container');
@@ -71,9 +73,9 @@ const checkForm = (popup) => {
 
 //Метож для инициализации первых шести карточек
 function renderDefaultElements () {
-  initialCards.forEach (item => {  
-    const element = createElemnt(item.name, item.link);
-    elementsList.append(element);
+  initialCards.forEach (item => {
+    const card = new Card(item, '.element-template', openPopupImage);
+    elementsList.append(card.getElement());
   })
 }
 
@@ -91,9 +93,10 @@ function openPopupFormAdd (popup) {
 }
 
 // метод для обработки окрытия формы добавления карточки
-function openPopupImage(imageLink,  imageName, alt) {
+function openPopupImage(imageLink,  imageName) {
+  debugger;
     popupImage.src = imageLink;
-    popupImage.alt = alt;
+    popupImage.alt = imageName;
     popupFigcaption.textContent = imageName;
     openPopup(popupTypeImage);
 }
@@ -121,35 +124,11 @@ function closePopup (popup) {
 
 //метод для обработки отправки формы добавления карточки
 function saveAddForm () {
-  const element = createElemnt(placeNameInput.value, placeLinkInput.value);
+  // const element = createElemnt(placeNameInput.value, placeLinkInput.value);
+  const card = new Card({'name': placeNameInput.value, 'link': placeLinkInput.value} , '.element-template', openPopupImage);
   elementsList.prepend(element);
   closePopup(popupTypeAdd);
 }
-
-// метод создания элемента новой карточки
-function createElemnt(name, link) {
-  const element = elementTemplate.querySelector('.element').cloneNode(true);
-  element.querySelector('.element__name').textContent = name;
-  const elementImage = element.querySelector('.element__image');
-  elementImage.src = link;
-  elementImage.alt = `Фото: ${name}`;
-  elementImage.addEventListener('click', () => openPopupImage(link, name, elementImage.alt));
-  element.querySelector('.element__like').addEventListener('click', clickLike)
-  element.querySelector('.element__delete-button').addEventListener('click', deleteElement);
-  return element
-}
-
-//метод для обработки нажатия на кнопку Like
-function clickLike (evt) {
-  evt.target.classList.toggle('element__like_active');
-}
-
-//метод обработки удаления карточки
-function deleteElement (evt) {
-  const element = evt.target.closest('.element');
-  element.remove();
-}
-
 
 //вызываем фунцию рендера для первых 6 элементов
 renderDefaultElements();
