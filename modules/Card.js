@@ -31,13 +31,11 @@ export default class Card {
 
     //метод обработки удаления карточки
   _deleteElement (evt) {
-    const element = evt.target.closest('.element');
-    element.remove();
+    evt.target.closest('.element').remove();
   }
 
   // метод навешивает слушателей на события карточки места
   _addListenters() {
-    // const elementImage = this._element.querySelector('.element__image');
     this._elementImage.addEventListener('click', () => this._openPopupImage(this._link, this._name));
     this._element.querySelector('.element__like').addEventListener('click', (evt) => this._clickLike(evt))
     this._element.querySelector('.element__delete-button').addEventListener('click', (evt) => this._deleteElement(evt));
