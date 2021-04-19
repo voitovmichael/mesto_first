@@ -1,6 +1,7 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import {ESC_CODE, initialCards, objFormParams} from './constants.js';
+import Section from './Section.js';
 // присвоим перемменым элементы формы:
 //popup, кнопку редактирования профиля, кнопку закрытия формы, саму форму,
 // имя профиля, описание профиля, input для вода имени, input для ввода описания
@@ -37,12 +38,13 @@ const checkForm = (popup) => {
 }
 
 //Метож для инициализации первых шести карточек
-function renderDefaultElements () {
-  initialCards.forEach (item => {
-    const card = new Card(item, '.element-template', openPopupImage);
-    elementsList.append(card.getElement());
-  })
-}
+// function renderDefaultElements () {
+//   initialCards.forEach (item => {
+//     const card = new Card(item, '.element-template', openPopupImage);
+//     elementsList.append(card.getElement());
+//   })
+// }
+
 
 // метод настраивает popup при его открытии
 function openPopupFormEdit (popup) {
@@ -78,7 +80,6 @@ function saveEditForm() {
   profileDescription.textContent = profileDescriptionInput.value;
   closePopup(popupTypeEdit);
 }
-
 //метод закрытия формы
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
@@ -94,7 +95,7 @@ function saveAddForm () {
 }
 
 //вызываем фунцию рендера для первых 6 элементов
-renderDefaultElements();
+// renderDefaultElements();
 
 // вешаем обработчик событие на нажатие кнопки редактирования профиля
 profileEdit.addEventListener('click', () => openPopupFormEdit(popupTypeEdit));
@@ -112,3 +113,12 @@ popupList.forEach((popup) => {
   });
 });
 
+const section = new Section({
+  items: initialCards, 
+  renderer: (item) => {
+    // initialCards.forEach (item => {
+    const card = new Card(item, '.element-template', openPopupImage);
+    section.addItem(card.getElement());
+  }}, '.elements__list');
+
+  section.renderItems()
