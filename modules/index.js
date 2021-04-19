@@ -2,6 +2,7 @@ import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import {ESC_CODE, initialCards, objFormParams} from './constants.js';
 import Section from './Section.js';
+import Popup from './Popup.js';
 // присвоим перемменым элементы формы:
 //popup, кнопку редактирования профиля, кнопку закрытия формы, саму форму,
 // имя профиля, описание профиля, input для вода имени, input для ввода описания
@@ -122,3 +123,7 @@ const section = new Section({
   }}, '.elements__list');
 
   section.renderItems()
+
+  const popup = new Popup('.popup_type_add');
+
+  popup.open();
