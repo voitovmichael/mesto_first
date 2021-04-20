@@ -3,6 +3,7 @@ import FormValidator from './FormValidator.js';
 import {ESC_CODE, initialCards, objFormParams} from './constants.js';
 import Section from './Section.js';
 import Popup from './Popup.js';
+import PopupWithImage from './PopupWithImage.js';
 // присвоим перемменым элементы формы:
 //popup, кнопку редактирования профиля, кнопку закрытия формы, саму форму,
 // имя профиля, описание профиля, input для вода имени, input для ввода описания
@@ -14,8 +15,8 @@ const addForm = document.querySelector('.popup__container_type_add');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const elementsList = document.querySelector('.elements__list');
-const popupImage = document.querySelector('.popup__image');
-const popupFigcaption = document.querySelector('.popup__figcaption');
+// const popupImage = document.querySelector('.popup__image');
+// const popupFigcaption = document.querySelector('.popup__figcaption');
 
 const popupTypeEdit = document.querySelector('.popup_type_edit');
 const profileNameInput = popupTypeEdit.querySelector('.popup__input_purpose_name');
@@ -107,23 +108,22 @@ editForm.addEventListener('submit', saveEditForm);
 // вешаем обработчик на событие отправки формы добавления карточки
 addForm.addEventListener('submit', saveAddForm);
 //вешаем обработчик на нажатие по overlay
-popupList.forEach((popup) => {
-  popup.addEventListener('click', (evt) => {
-    if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button'))
-      closePopup(popup);
-  });
-});
+// popupList.forEach((popup) => {
+//   popup.addEventListener('click', (evt) => {
+//     if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button'))
+//       closePopup(popup);
+//   });
+// });
+
+const popupWithImage = new PopupWithImage('.popup_type_image');
+popupWithImage.setEventListeners();
 
 const section = new Section({
   items: initialCards, 
   renderer: (item) => {
     // initialCards.forEach (item => {
-    const card = new Card(item, '.element-template', openPopupImage);
+    const card = new Card(item, '.element-template', popupWithImage.open.bind(popupWithImage));
     section.addItem(card.getElement());
   }}, '.elements__list');
 
   section.renderItems()
-
-  const popup = new Popup('.popup_type_add');
-
-  popup.open();
