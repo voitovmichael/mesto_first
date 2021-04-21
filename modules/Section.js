@@ -13,7 +13,7 @@ export default class Section {
 
   addItem(element) {
     const container = document.querySelector(this._selector);
-    container.append(element);
+    container.prepend(element);
   }
 
 }
