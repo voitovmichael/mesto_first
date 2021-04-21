@@ -7,6 +7,7 @@ export default class PopupWithImage extends Popup{
     this._popupFigcaption = document.querySelector('.popup__figcaption');
   }
 
+  // переопределяем метод открытия popup
   open(imageLink, imageName) {
     this._popupImage.src = imageLink;
     this._popupFigcaption.alt = imageName;
