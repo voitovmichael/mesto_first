@@ -5,7 +5,7 @@ export default class FormValidator {
   }
 
   //метод показывает предупреждение об ошибке в случае некорректного значения поля
-_showError = (inputElement, {inputError, inputErrorActive}) => {
+_showError (inputElement, {inputError, inputErrorActive}){
   inputElement.classList.add(inputError);
   const errorElemnt = this._form.querySelector(`.${inputElement.name}-placeholder`);
   errorElemnt.textContent = inputElement.validationMessage;

@@ -1,3 +1,4 @@
+import kras from '../images/elements/Galickii-park.jpg';
 const ESC_CODE = 27;
 const initialCards = [
   {
@@ -10,7 +11,7 @@ const initialCards = [
   },
   {
     name: 'Краснодар',
-    link: './images/elements/Galickii-park.jpg'
+    link: kras
   },
   {
     name: 'Камчатка',

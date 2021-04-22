@@ -4,13 +4,14 @@ export default class PopupWithForm extends Popup{
     super(selector);
     this._submitCallback = submitCallback;
     this._form = this._popup.querySelector('.popup__container');
-    this._inputPurposeName = document.querySelector('.popup__input_purpose_name');
-    this._inputPurposeDescription = document.querySelector('.popup__input_purpose_description');
+    this._inputPurposeName = this._form.querySelector('.popup__input_purpose_name');
+    this._inputPurposeDescription = this._form.querySelector('.popup__input_purpose_description');
   }
 
   // метод возвращает объект со значениями input-ов формы
   _getInpputValues() {
     const inputValuesObj = {};
+    debugger;
     inputValuesObj[this._inputPurposeName.name] = this._inputPurposeName.value;
     inputValuesObj[this._inputPurposeDescription.name] = this._inputPurposeDescription.value;
     return inputValuesObj;
@@ -18,7 +19,6 @@ export default class PopupWithForm extends Popup{
 
   // метод задает значения input для отображения формы
   setInputValues({name, description}) {
-    debugger;
     this._inputPurposeName.value = name;
     this._inputPurposeDescription.value = description; 
   }

@@ -6,6 +6,7 @@ import Popup from './Popup.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithform.js';
 import UserInfo from './UserInfo.js';
+import '../pages/index.css';
 
 const profileEdit = document.querySelector('.profile__edit');
 const popupAddButton = document.querySelector('.profile__add-button');
@@ -48,6 +49,7 @@ profileEdit.addEventListener('click', () => {
 
 // создание popup-а для добавления нового места
 const popupAddForm = new PopupWithForm('.popup_type_add', (inputValues) => {
+  debugger;
   const card = new Card({'name': inputValues['profileEditor-name'], 'link': inputValues['profileEditor-description']}, 
   '.element-template', popupWithImage.open.bind(popupWithImage));
     section.addItem(card.getElement());
