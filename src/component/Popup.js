@@ -1,21 +1,21 @@
-import { ESC_CODE } from './constants.js';
+import { ESC_CODE } from '../utils/constants.js';
 
 export default class Popup {
   constructor(selector) {
     this._popup = document.querySelector(selector);
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   // метод открытия popup
   open() {
     this._popup.classList.add('popup_opened');
-    document.addEventListener('keyup', (evt) => {
-      this._handleEscClose(evt)
-    })
+    document.addEventListener('keyup', this._handleEscClose)
   }
 
   // метод закрытия popup
   close() {
     this._popup.classList.remove('popup_opened');
+    document.removeEventListener('keyup', this._handleEscClose);
   }
 
   // метод закртия popup через кнопку ESC

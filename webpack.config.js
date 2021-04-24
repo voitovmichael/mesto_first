@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 module.exports = {
-  entry: './src/modules/index.js',
+  entry: './src/pages/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
@@ -30,16 +30,21 @@ module.exports = {
       },
 
       {
-        test: /\.(png|jpe?g|gif|svg|woff2|woff)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              esModule: false
-            }
-          },
-        ],
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name].[contenthash][ext]',
+        }
       },
+
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name].[contenthash][ext]',
+        }
+      },
+
     ]
   },
   plugins: [

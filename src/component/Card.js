@@ -3,25 +3,20 @@ export default class Card {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
-    this._element = this._getCardElement();
-    this._elementImage = this._getCardImage(this._link, this._name);
+    this._generateCard();
     this._openPopupImage = openPopupImage;
     this._addListenters();
   }
 
-  //метод возвращает шаблон изображения места
-  _getCardImage(link, name) {
-    const elementImage = this._element.querySelector('.element__image');
-    elementImage.src = link;
-    elementImage.alt = name;
-    return elementImage;
-  }
-
-  // метод возвращает шаблон карточки места
-  _getCardElement() {
-    const element = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
-    element.querySelector('.element__name').textContent = this._name;
-    return element;
+  // метод генерирует елементы карточки
+  _generateCard() {
+    this._element = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
+    this._element.querySelector('.element__name').textContent = this._name;
+    this._elementImage = this._element.querySelector('.element__image');
+    this._elementImage.src = this._link;
+    this._elementImage.alt = this._name;
+    this._elementLike = this._element.querySelector('.element__like');
+    this._elementDeleteButton = this._element.querySelector('.element__delete-button');
   }
 
   //метод для обработки нажатия на кнопку Like
@@ -37,8 +32,8 @@ export default class Card {
   // метод навешивает слушателей на события карточки места
   _addListenters() {
     this._elementImage.addEventListener('click', () => this._openPopupImage(this._link, this._name));
-    this._element.querySelector('.element__like').addEventListener('click', (evt) => this._clickLike(evt))
-    this._element.querySelector('.element__delete-button').addEventListener('click', (evt) => this._deleteElement(evt));
+    this._elementLike.addEventListener('click', (evt) => this._clickLike(evt))
+    this._elementDeleteButton.addEventListener('click', (evt) => this._deleteElement(evt));
   }
 
   //Метод возвращает элемент карточки

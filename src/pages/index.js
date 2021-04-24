@@ -1,21 +1,14 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import {ESC_CODE, initialCards, objFormParams} from './constants.js';
-import Section from './Section.js';
-import Popup from './Popup.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithform.js';
-import UserInfo from './UserInfo.js';
-import '../pages/index.css';
+import Card from '../component/Card.js';
+import FormValidator from '../component/FormValidator.js';
+import {initialCards, objFormParams} from '../utils/constants.js';
+import Section from '../component/Section.js';
+import PopupWithImage from '../component/PopupWithImage.js';
+import PopupWithForm from '../component/PopupWithform.js';
+import UserInfo from '../component/UserInfo.js';
+import './index.css';
 
 const profileEdit = document.querySelector('.profile__edit');
 const popupAddButton = document.querySelector('.profile__add-button');
-
-// функция создает экземпляр класса FormValidator для валидации форм
-const checkForm = (form) => {
-  const formValidator = new FormValidator(objFormParams, form);
-  formValidator.enableValidation();
-}
 
 // создание popup-а для откртия карточек места
 const popupWithImage = new PopupWithImage('.popup_type_image');
@@ -36,27 +29,35 @@ const userInfo = new UserInfo({name: '.profile__name', description: '.profile__d
 
 // создание popup-а для редактирования профиля
 const popupEditForm = new PopupWithForm('.popup_type_edit', (inputValues) => {
-  debugger;
-  userInfo.setUserInfo(inputValues['profileEditor-name'], inputValues['profileEditor-description']);
+  userInfo.setUserInfo(inputValues['element-name'], inputValues['element-link']);
   popupEditForm.close()
 });
+const profileValidator = new FormValidator(objFormParams, popupEditForm.getPopupForm());
+profileValidator.enableValidation();
+
 popupEditForm.setEventListeners();
 profileEdit.addEventListener('click', () => {
-  popupEditForm.setInputValues(userInfo.getUserInfo());
+  const info = userInfo.getUserInfo(),
+  userInfoFoForm = {};
+  userInfoFoForm['element-name'] = info.name;
+  userInfoFoForm['element-link'] = info.description;
+  popupEditForm.setInputValues(userInfoFoForm);
   popupEditForm.open();
-  checkForm(popupEditForm.getPopupForm());
+  profileValidator.toggleButtonState();
 });
 
 // создание popup-а для добавления нового места
 const popupAddForm = new PopupWithForm('.popup_type_add', (inputValues) => {
-  debugger;
   const card = new Card({'name': inputValues['profileEditor-name'], 'link': inputValues['profileEditor-description']}, 
   '.element-template', popupWithImage.open.bind(popupWithImage));
     section.addItem(card.getElement());
     popupAddForm.close();
 });
+const addCardValidator = new FormValidator(objFormParams, popupAddForm.getPopupForm());
+addCardValidator.enableValidation();
+
 popupAddForm.setEventListeners();
 popupAddButton.addEventListener('click', () => {
   popupAddForm.open();
-  checkForm(popupAddForm.getPopupForm());
+  addCardValidator.toggleButtonState();
 });
