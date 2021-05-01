@@ -14,15 +14,17 @@ const popupAddButton = document.querySelector('.profile__add-button');
 const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
 
-// создаем экземпляр класса  для инициализации карточек места
-const section = new Section({
-  items: initialCards, 
-  renderer: (item) => {
-    const card = new Card(item, '.element-template', popupWithImage.open.bind(popupWithImage));
-    section.addItem(card.getElement());
-  }}, '.elements__list');
+//метод для создания карточек
 
-section.renderItems()
+const createCard = (item) => {
+  const card = new Card(item, '.element-template', popupWithImage.open.bind(popupWithImage));
+  section.addItem(card.getElement());
+}
+
+// создаем экземпляр класса  для инициализации карточек места
+const section = new Section(createCard, '.elements__list');
+
+section.renderItems(initialCards);
 
 // создаем экземпляр класса  для управления данными пользователя
 const userInfo = new UserInfo({name: '.profile__name', description: '.profile__description'});
