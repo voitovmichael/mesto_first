@@ -15,7 +15,6 @@ const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
 
 //метод для создания карточек
-
 const createCard = (item) => {
   const card = new Card(item, '.element-template', popupWithImage.open.bind(popupWithImage));
   section.addItem(card.getElement());
@@ -24,7 +23,7 @@ const createCard = (item) => {
 // создаем экземпляр класса  для инициализации карточек места
 const section = new Section(createCard, '.elements__list');
 
-section.renderItems(initialCards);
+section.renderItems('https://mesto.nomoreparties.co/v1/cohort-23/cards');
 
 // создаем экземпляр класса  для управления данными пользователя
 const userInfo = new UserInfo({name: '.profile__name', description: '.profile__description', avatar: '.profile__avatar'});
