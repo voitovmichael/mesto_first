@@ -27,11 +27,11 @@ const section = new Section(createCard, '.elements__list');
 section.renderItems(initialCards);
 
 // создаем экземпляр класса  для управления данными пользователя
-const userInfo = new UserInfo({name: '.profile__name', description: '.profile__description'});
+const userInfo = new UserInfo({name: '.profile__name', description: '.profile__description', avatar: '.profile__avatar'});
 
 // создание popup-а для редактирования профиля
 const popupEditForm = new PopupWithForm('.popup_type_edit', (inputValues) => {
-  userInfo.setUserInfo(inputValues['element-name'], inputValues['element-link']);
+  userInfo.setUserInfo({name: inputValues['element-name'], about: inputValues['element-link']});
   popupEditForm.close()
 });
 const profileValidator = new FormValidator(objFormParams, popupEditForm.getPopupForm());

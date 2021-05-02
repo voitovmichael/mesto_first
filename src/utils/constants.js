@@ -36,4 +36,6 @@ const objFormParams = {
   saveButtonActive: 'popup__save_active'
 }
 
-export {ESC_CODE, initialCards, objFormParams};
+const token = 'e2787495-d10a-4c6a-a5f2-7d4ee36816fa';
+
+export {ESC_CODE, initialCards, objFormParams, token};
