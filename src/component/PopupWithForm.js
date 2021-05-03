@@ -1,4 +1,5 @@
 import Popup from './Popup.js'
+import {token} from '../utils/constants.js';
 export default class PopupWithForm extends Popup{
   constructor(selector, submitCallback) {
     super(selector);
@@ -12,6 +13,21 @@ export default class PopupWithForm extends Popup{
     const inputValuesObj = {};
     this._inputList.forEach((input) => inputValuesObj[input.name] = input.value);
     return inputValuesObj;
+  }
+
+  // метод обновляет данные на сервере
+  patchInputValues(submitUrl, data) {
+    fetch(submitUrl, {
+      method: 'PATCH',
+      headers: {
+        authorization: token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about
+      })
+    });
   }
 
   // метод задает значения input для отображения формы

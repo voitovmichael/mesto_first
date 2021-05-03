@@ -30,19 +30,23 @@ const userInfo = new UserInfo({name: '.profile__name', description: '.profile__d
 
 // создание popup-а для редактирования профиля
 const popupEditForm = new PopupWithForm('.popup_type_edit', (inputValues) => {
-  userInfo.setUserInfo({name: inputValues['element-name'], about: inputValues['element-link']});
+  const data = {name: inputValues['element-name'], about: inputValues['element-link']};
+  userInfo.setUserInfo(data);
+  popupEditForm.patchInputValues('https://mesto.nomoreparties.co/v1/cohort-23/users/me', data);
   popupEditForm.close()
 });
 const profileValidator = new FormValidator(objFormParams, popupEditForm.getPopupForm());
 profileValidator.enableValidation();
 
 popupEditForm.setEventListeners();
+
 profileEdit.addEventListener('click', () => {
-  const info = userInfo.getUserInfo(),
-  userInfoFoForm = {};
+  const userInfoFoForm = {};
+  const info = userInfo.getUserInfo();
   userInfoFoForm['element-name'] = info.name;
   userInfoFoForm['element-link'] = info.description;
   popupEditForm.setInputValues(userInfoFoForm);
+  // popupEditForm.setSubmitData()
   popupEditForm.open();
   profileValidator.toggleButtonState();
 });
