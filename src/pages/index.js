@@ -32,7 +32,12 @@ const userInfo = new UserInfo({name: '.profile__name', description: '.profile__d
 const popupEditForm = new PopupWithForm('.popup_type_edit', (inputValues) => {
   const data = {name: inputValues['element-name'], about: inputValues['element-link']};
   userInfo.setUserInfo(data);
-  popupEditForm.patchInputValues('https://mesto.nomoreparties.co/v1/cohort-23/users/me', data);
+  popupEditForm.fetchNewData({method: 'PATCH', url: 'https://mesto.nomoreparties.co/v1/cohort-23/users/me'}, 
+    JSON.stringify({
+      name: data.name,
+      about: data.about
+    })
+  );
   popupEditForm.close()
 });
 const profileValidator = new FormValidator(objFormParams, popupEditForm.getPopupForm());
@@ -53,9 +58,15 @@ profileEdit.addEventListener('click', () => {
 
 // создание popup-а для добавления нового места
 const popupAddForm = new PopupWithForm('.popup_type_add', (inputValues) => {
-  const card = new Card({'name': inputValues['profileEditor-name'], 'link': inputValues['profileEditor-description']}, 
-  '.element-template', popupWithImage.open.bind(popupWithImage));
+  const data = {'name': inputValues['profileEditor-name'], 'link': inputValues['profileEditor-description']};
+  const card = new Card(data, '.element-template', popupWithImage.open.bind(popupWithImage));
     section.addItem(card.getElement());
+    popupAddForm.fetchNewData({method: 'POST', url: 'https://mesto.nomoreparties.co/v1/cohort-23/cards'}, 
+      JSON.stringify({
+        name: data.name,
+        link: data.link
+      })
+    )
     popupAddForm.close();
 });
 const addCardValidator = new FormValidator(objFormParams, popupAddForm.getPopupForm());

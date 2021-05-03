@@ -15,18 +15,21 @@ export default class PopupWithForm extends Popup{
     return inputValuesObj;
   }
 
-  // метод обновляет данные на сервере
-  patchInputValues(submitUrl, data) {
-    fetch(submitUrl, {
-      method: 'PATCH',
+  // метод обновляет/добавляет новые данные на сервере
+  fetchNewData(fetchData, body) {
+    fetch(fetchData.url, {
+      method: fetchData.method,
       headers: {
         authorization: token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        name: data.name,
-        about: data.about
-      })
+      body: body
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((response) => {
+      debugger;
     });
   }
 
