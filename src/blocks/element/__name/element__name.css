@@ -8,4 +8,5 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  align-self: start
 }

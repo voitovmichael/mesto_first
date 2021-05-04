@@ -6,6 +6,7 @@ export default class Card {
     this._generateCard();
     this._openPopupImage = openPopupImage;
     this._addListenters();
+    this._elementLikeCount.textContent = data.likes.length;
   }
 
   // метод генерирует елементы карточки
@@ -16,6 +17,7 @@ export default class Card {
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;
     this._elementLike = this._element.querySelector('.element__like');
+    this._elementLikeCount = this._element.querySelector('.element__like-counter');
     this._elementDeleteButton = this._element.querySelector('.element__delete-button');
   }
 
@@ -40,5 +42,6 @@ export default class Card {
   getElement() {
     return this._element;
   }
+
 
 }
