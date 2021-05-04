@@ -1,10 +1,11 @@
 export default class Card {
-  constructor(data, templateSelector, openPopupImage) {
+  constructor(data, templateSelector, methods) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._generateCard();
-    this._openPopupImage = openPopupImage;
+    this._openPopupImage = methods.openPopupImage;
+    this._openPopupDelete = methods.openPopupDelete;
     this._addListenters();
     this._elementLikeCount.textContent = data.likes.length;
   }
@@ -28,7 +29,7 @@ export default class Card {
 
     //метод обработки удаления карточки
   _deleteElement (evt) {
-    evt.target.closest('.element').remove();
+    this._openPopupDelete(evt);
   }
 
   // метод навешивает слушателей на события карточки места

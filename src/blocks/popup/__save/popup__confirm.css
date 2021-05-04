@@ -1,4 +1,4 @@
-.popup__save {
+.popup__confirm {
   padding: 0;
   min-height: 50px;
   background-color: #fff;
@@ -10,7 +10,7 @@
 }
 
 @media screen and (max-width: 767.5px) {
-  .popup__save {
+  .popup__confirm {
     min-height: 46px;
     font-size: 14px;
   }

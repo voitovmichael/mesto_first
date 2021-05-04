@@ -30,10 +30,10 @@ const initialCards = [
 const objFormParams = {
   formSelector: '.popup__container',
   inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
+  submitButtonSelector: '.popup__confirm',
   inputError: 'popup__input_error',
   inputErrorActive: 'popup__input-error_active',
-  saveButtonActive: 'popup__save_active'
+  saveButtonActive: 'popup__confirm_active'
 }
 
 const token = 'e2787495-d10a-4c6a-a5f2-7d4ee36816fa';

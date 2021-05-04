@@ -4,6 +4,7 @@ import {initialCards, objFormParams} from '../utils/constants.js';
 import Section from '../component/Section.js';
 import PopupWithImage from '../component/PopupWithImage.js';
 import PopupWithForm from '../component/PopupWithform.js';
+import PopupDelete from '../component/PopupDelete.js';
 import UserInfo from '../component/UserInfo.js';
 import './index.css';
 
@@ -14,9 +15,16 @@ const popupAddButton = document.querySelector('.profile__add-button');
 const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
 
+//создание popup-а для удаления карточки
+const popupDelete = new PopupDelete('.popup_type_delete');
+popupDelete.setEventListeners();
+
 //метод для создания карточек
 const createCard = (item) => {
-  const card = new Card(item, '.element-template', popupWithImage.open.bind(popupWithImage));
+  const card = new Card(item, '.element-template', {
+    openPopupDelete: popupDelete.open.bind(popupDelete), 
+    openPopupImage: popupWithImage.open.bind(popupWithImage)
+  });
   section.addItem(card.getElement());
 }
 
@@ -59,8 +67,9 @@ profileEdit.addEventListener('click', () => {
 // создание popup-а для добавления нового места
 const popupAddForm = new PopupWithForm('.popup_type_add', (inputValues) => {
   const data = {'name': inputValues['profileEditor-name'], 'link': inputValues['profileEditor-description']};
-  const card = new Card(data, '.element-template', popupWithImage.open.bind(popupWithImage));
-    section.addItem(card.getElement());
+  // const card = new Card(data, '.element-template', popupWithImage.open.bind(popupWithImage));
+  //   section.addItem(card.getElement());
+    createCard(data);
     popupAddForm.fetchNewData({method: 'POST', url: 'https://mesto.nomoreparties.co/v1/cohort-23/cards'}, 
       JSON.stringify({
         name: data.name,

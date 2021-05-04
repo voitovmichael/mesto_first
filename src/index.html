@@ -56,7 +56,7 @@
         <input class="popup__input popup__input_purpose_description" name="element-link" type="text" value="" 
           placeholder="Описание деятельности" required minlength="2" maxlength="200">
         <span class="popup__input-error element-link-placeholder"></span>
-        <button class="popup__save" type="submit">Сохранить</button>
+        <button class="popup__confirm" type="submit">Сохранить</button>
       </form>
     </section>
     
@@ -71,7 +71,7 @@
         <input class="popup__input popup__input_purpose_description" name="profileEditor-description" type="url" value="" 
           placeholder="Ссылка на картинку" required>
         <span class="popup__input-error profileEditor-description-placeholder"></span>
-        <button class="popup__save" type="submit">Создать</button>
+        <button class="popup__confirm" type="submit">Создать</button>
       </form>
     </section>
 
@@ -81,6 +81,14 @@
         <img class="popup__image" src=" " alt=" ">
         <figcaption class="popup__figcaption"></figcaption>
       </figure>
+    </section>
+    
+    <section class="popup popup_type_delete">
+      <button class="popup__close-button" type="reset" aria-label="Close"></button>
+      <div class="popup__container popup__container_type_delete">
+        <p class="popup__delete-question">Вы уверены?</p>
+        <button class="popup__confirm popup__confirm_active" type="submit">Да</button>
+      </div>
     </section>
   </body>
 </html>
