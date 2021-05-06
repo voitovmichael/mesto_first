@@ -26,7 +26,9 @@ popupDelete.setEventListeners();
 const createCard = (item) => {
   const card = new Card(item, '.element-template', {
     openPopupDelete: popupDelete.open.bind(popupDelete), 
-    openPopupImage: popupWithImage.open.bind(popupWithImage)
+    openPopupImage: popupWithImage.open.bind(popupWithImage),
+    putLike: api.put.bind(api),
+    deleteLike: api.delete.bind(api)
   });
   card.renderDeletIcon(userInfo.getUserId())
   section.addItem(card.getElement());

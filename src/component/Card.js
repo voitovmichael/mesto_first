@@ -6,6 +6,8 @@ export default class Card {
     this._generateCard();
     this._openPopupImage = methods.openPopupImage;
     this._openPopupDelete = methods.openPopupDelete;
+    this._putLike = methods.putLike;
+    this._deleteLike = methods.deleteLike;
     this._addListenters();
     if(data.likes) {
       this._elementLikeCount.textContent = data.likes.length;
@@ -32,7 +34,18 @@ export default class Card {
 
   //метод для обработки нажатия на кнопку Like
  _clickLike (evt) {
-    evt.target.classList.toggle('element__like_active');
+   if(!evt.target.classList.contains('element__like_active')) {
+     this._putLike(this._id).then((data) => {
+       evt.target.classList.add('element__like_active');
+       this._elementLikeCount.textContent = data.likes.length;
+     });
+   } else {
+    this._deleteLike('cards/likes',this._id).then((data) => {
+      evt.target.classList.remove('element__like_active');
+      this._elementLikeCount.textContent = data.likes.length;
+    });
+   }
+    // evt.target.classList.toggle('element__like_active');
   }
 
     //метод обработки удаления карточки

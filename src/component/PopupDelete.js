@@ -8,7 +8,7 @@ export default class PopupDelete extends Popup {
   }
 
   deleteCard() {
-    this._fetchDelete(this._cardId)
+    this._fetchDelete('cards', this._cardId)
     .then((data) => {
       this._card.remove();
       super.close();

@@ -61,9 +61,27 @@ export default class Api {
     })
   }
 
-  delete(id) {
-    return fetch(`${this._url}/cards/${id}`, {
+  delete(url, id) {
+    return fetch(`${this._url}/${url}/${id}`, {
       method: 'DELETE',
+      headers: {
+        authorization: token
+      }
+    })
+    .then((response) => {
+      if(response.ok) {
+        return response.json();
+      }
+      return Promise.reject(`Ошибка: ${response.status}`);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  put(id) {
+    return fetch(`${this._url}/cards/likes/${id}`, {
+      method: 'PUT',
       headers: {
         authorization: token
       }
