@@ -7,7 +7,15 @@ export default class Card {
     this._openPopupImage = methods.openPopupImage;
     this._openPopupDelete = methods.openPopupDelete;
     this._addListenters();
-    this._elementLikeCount.textContent = data.likes.length;
+    if(data.likes) {
+      this._elementLikeCount.textContent = data.likes.length;
+    }
+    if(data.owner) {
+      this._ownerCardId = data.owner._id;
+    }
+    if(data._id) {
+      this._id = data._id;
+    }
   }
 
   // метод генерирует елементы карточки
@@ -29,7 +37,7 @@ export default class Card {
 
     //метод обработки удаления карточки
   _deleteElement (evt) {
-    this._openPopupDelete(evt);
+    this._openPopupDelete(evt, this._id);
   }
 
   // метод навешивает слушателей на события карточки места
@@ -44,5 +52,11 @@ export default class Card {
     return this._element;
   }
 
+  //метод отрисовывает иконку удаления карточки
+  renderDeletIcon(userId) {
+    if(userId === this._ownerCardId || !this._ownerCardId) {
+      this._elementDeleteButton.classList.add('popup__close-button_active');
+    }
+  }
 
 }

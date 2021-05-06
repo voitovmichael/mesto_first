@@ -28,14 +28,15 @@
 @import url(../blocks/popup/__input-error/_active/popup__input-error_active.css);
 @import url(../blocks/popup/__input/_purpose/popup__input_purpose_description.css);
 @import url(../blocks/popup/__input/_purpose/popup__input_purpose_name.css);
-@import url(../blocks/popup/__save/popup__confirm.css);
-@import url(../blocks/popup/__save/_active/popup__confirm_active.css);
+@import url(../blocks/popup/__confirm/popup__confirm.css);
+@import url(../blocks/popup/__confirm/_active/popup__confirm_active.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__figure/popup__figure.css);
 @import url(../blocks/popup/__figcaption/popup__figcaption.css);
 @import url(../blocks/popup/_type/_delete/popup_type_delete.css);
 @import url(../blocks/popup/__container/_type/__delete/popup__container_type_delete.css);
 @import url(../blocks/popup/__delete-question/popup__delete-question.css);
+@import url(../blocks/popup/__close-button/_active/popup__close-button_active.css);
 
 /*profile*/
 @import url(../blocks/profile/profile.css);

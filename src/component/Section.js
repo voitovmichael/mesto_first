@@ -1,31 +1,17 @@
 import {token} from '../utils/constants.js';
 export default class Section {
-  constructor(renderer, selector) {
+  constructor(renderer, selector, fetchCardsInfo) {
     this._renderer = renderer;
     this._selector = selector;
     this._container = document.querySelector(this._selector);
+    this._fetchCardsInfo = fetchCardsInfo;
+    
   }
 
-  //метод возвращает данные с сервера для создания карточек
-  _fetchCardsInfo(fetchUrl, callback) {
-    fetch(fetchUrl, {
-      headers: {
-        authorization: token
-      }
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((items) => {
-      callback(items)
-    })
-  }
-
-  renderItems(fetchUrl) {
-    this._fetchCardsInfo(fetchUrl, (items) => {
-      items.forEach((item) => {
-        this._renderer(item);
-      });
+  renderItems() {
+    this._fetchCardsInfo('cards')
+    .then((data) => {
+      data.forEach((item) => {this._renderer(item)});
     })
   }
 

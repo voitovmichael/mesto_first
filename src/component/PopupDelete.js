@@ -1,18 +1,23 @@
 import Popup from "./Popup.js";
-
+import {token} from '../utils/constants.js'
 export default class PopupDelete extends Popup {
-  constructor(selector) {
+  constructor(selector, fetchDelete) {
     super(selector);
     this._popupConfirm = this._popup.querySelector('.popup__confirm');
+    this._fetchDelete = fetchDelete;
   }
 
-  deleteCard(evt) {
-    this._deleteCard.remove();
-    super.close();
+  deleteCard() {
+    this._fetchDelete(this._cardId)
+    .then((data) => {
+      this._card.remove();
+      super.close();
+    })
   }
 
-  open(evt) {
-    this._deleteCard = evt.target.closest('.element');
+  open(evt, id) {
+    this._card = evt.target.closest('.element');
+    this._cardId = id;
     super.open();
   }
 

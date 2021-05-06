@@ -16,22 +16,16 @@ export default class PopupWithForm extends Popup{
   }
 
   // метод обновляет/добавляет новые данные на сервере
-  fetchNewData(fetchData, body) {
-    fetch(fetchData.url, {
-      method: fetchData.method,
-      headers: {
-        authorization: token,
-        'Content-Type': 'application/json'
-      },
-      body: body
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((response) => {
-      debugger;
-    });
-  }
+  // fetchNewData(fetchData, body) {
+  //   return fetch(fetchData.url, {
+  //     method: fetchData.method,
+  //     headers: {
+  //       authorization: token,
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: body
+  //   });
+  // }
 
   // метод задает значения input для отображения формы
   setInputValues(data) {
