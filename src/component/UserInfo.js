@@ -1,18 +1,9 @@
-// import {token} from '../utils/constants';
 export default class UserInfo {
   constructor(selectors) {
     this._name = document.querySelector(selectors.name);
     this._description = document.querySelector(selectors.description);
     this._avatar = document.querySelector(selectors.avatar)
   }
-
-  // fetchUserInfo() {
-  //   return fetch('https://mesto.nomoreparties.co/v1/cohort-23/users/me', {
-  //     headers: {
-  //       authorization: token
-  //     }
-  //   })
-  // }
 
   // метод возвращает объект с содержимым имени и описания
   getUserInfo() {

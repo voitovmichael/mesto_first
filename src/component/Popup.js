@@ -4,6 +4,10 @@ export default class Popup {
   constructor(selector) {
     this._popup = document.querySelector(selector);
     this._handleEscClose = this._handleEscClose.bind(this);
+    this._buttonConfirm = this._popup.querySelector('.popup__confirm');
+    if(this._buttonConfirm) {
+      this._buttonConfirmText = this._buttonConfirm.textContent;
+    }
   }
 
   // метод открытия popup
@@ -33,4 +37,10 @@ export default class Popup {
       }
     })
   }
+
+  //метод для отображения процесса запроса на сервер
+  changeButtonName(isRequest) {
+    this._buttonConfirm.textContent = isRequest ? 'Сохранение...' : this._buttonConfirmText;
+  }
+
 }

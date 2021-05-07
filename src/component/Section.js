@@ -1,4 +1,3 @@
-import {token} from '../utils/constants.js';
 export default class Section {
   constructor(renderer, selector, fetchCardsInfo) {
     this._renderer = renderer;

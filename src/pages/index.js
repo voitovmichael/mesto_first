@@ -1,6 +1,6 @@
 import Card from '../component/Card.js';
 import FormValidator from '../component/FormValidator.js';
-import {initialCards, objFormParams} from '../utils/constants.js';
+import {objFormParams} from '../utils/constants.js';
 import Section from '../component/Section.js';
 import PopupWithImage from '../component/PopupWithImage.js';
 import PopupWithForm from '../component/PopupWithform.js';
@@ -9,8 +9,10 @@ import UserInfo from '../component/UserInfo.js';
 import Api from '../component/Api.js';
 import './index.css';
 
+
 const profileEdit = document.querySelector('.profile__edit');
 const popupAddButton = document.querySelector('.profile__add-button');
+const avatar = document.querySelector('.profile__avatar');
 
 // создаем экземпляр класса Api для отпарвки запросов на сервер
 const api = new Api({url: 'https://mesto.nomoreparties.co/v1/cohort-23'});
@@ -46,9 +48,10 @@ api.get('users/me').then((data) => {
 })
 // создание popup-а для редактирования профиля
 const popupEditForm = new PopupWithForm('.popup_type_edit', (inputValues) => {
+  popupEditForm.changeButtonName(true);
   const data = {name: inputValues['element-name'], about: inputValues['element-link']};
   userInfo.setUserInfo(data);
-  api.patch(
+  api.patch( 'users/me', 
     JSON.stringify({
       name: data.name,
       about: data.about
@@ -56,6 +59,7 @@ const popupEditForm = new PopupWithForm('.popup_type_edit', (inputValues) => {
   )
   .then((data) => {
     userInfo.setUserInfo(data);
+    popupEditForm.changeButtonName(false);
     popupEditForm.close();
   })
 });
@@ -71,13 +75,13 @@ profileEdit.addEventListener('click', () => {
   userInfoFoForm['element-name'] = info.name;
   userInfoFoForm['element-link'] = info.description;
   popupEditForm.setInputValues(userInfoFoForm);
-  // popupEditForm.setSubmitData()
   popupEditForm.open();
   profileValidator.toggleButtonState();
 });
 
 // создание popup-а для добавления нового места
 const popupAddForm = new PopupWithForm('.popup_type_add', (inputValues) => {
+  popupAddForm.changeButtonName(true);
   const data = {'name': inputValues['profileEditor-name'], 'link': inputValues['profileEditor-description']};
     api.post(
       JSON.stringify({
@@ -87,6 +91,7 @@ const popupAddForm = new PopupWithForm('.popup_type_add', (inputValues) => {
     )
     .then((response) => {
       createCard(response);
+      popupAddForm.changeButtonName(false);
       popupAddForm.close();
     });
 });
@@ -97,4 +102,28 @@ popupAddForm.setEventListeners();
 popupAddButton.addEventListener('click', () => {
   popupAddForm.open();
   addCardValidator.toggleButtonState();
+});
+
+// создание popup-а для редактирования аватара
+const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', (inputValues) => {
+  popupEditAvatar.changeButtonName(true);
+  const data = {avatar: inputValues['avatarEditor-link']};
+  api.patch('users/me/avatar', JSON.stringify({
+    avatar: data.avatar
+  }))
+  .then((data) => {
+    userInfo.setUserInfo(data);
+    popupEditAvatar.changeButtonName(false);
+    popupEditAvatar.close();
+  });
+});
+
+const editAvatarValidator = new FormValidator(objFormParams, popupEditAvatar.getPopupForm());
+editAvatarValidator.enableValidation();
+
+popupEditAvatar.setEventListeners();
+
+avatar.addEventListener('click', () => {
+  popupEditAvatar.open();
+  editAvatarValidator.toggleButtonState();
 });

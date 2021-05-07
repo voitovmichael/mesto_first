@@ -1,5 +1,4 @@
 import Popup from './Popup.js'
-import {token} from '../utils/constants.js';
 export default class PopupWithForm extends Popup{
   constructor(selector, submitCallback) {
     super(selector);
@@ -14,18 +13,6 @@ export default class PopupWithForm extends Popup{
     this._inputList.forEach((input) => inputValuesObj[input.name] = input.value);
     return inputValuesObj;
   }
-
-  // метод обновляет/добавляет новые данные на сервере
-  // fetchNewData(fetchData, body) {
-  //   return fetch(fetchData.url, {
-  //     method: fetchData.method,
-  //     headers: {
-  //       authorization: token,
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: body
-  //   });
-  // }
 
   // метод задает значения input для отображения формы
   setInputValues(data) {

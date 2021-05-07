@@ -1,5 +1,4 @@
 import Popup from "./Popup.js";
-import {token} from '../utils/constants.js'
 export default class PopupDelete extends Popup {
   constructor(selector, fetchDelete) {
     super(selector);
@@ -22,7 +21,8 @@ export default class PopupDelete extends Popup {
   }
 
   setEventListeners() {
-    this._popupConfirm.addEventListener('click', this.deleteCard.bind(this))
+    this._popupConfirm.addEventListener('click', this.deleteCard.bind(this));
+    super.setEventListeners();
   }
 
 }

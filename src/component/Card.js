@@ -45,7 +45,6 @@ export default class Card {
       this._elementLikeCount.textContent = data.likes.length;
     });
    }
-    // evt.target.classList.toggle('element__like_active');
   }
 
     //метод обработки удаления карточки

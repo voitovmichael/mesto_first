@@ -10,19 +10,12 @@ export default class Api {
         authorization: token
       }
     })
-    .then((response) => {
-      if(response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status}`)
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    .then(this._resolve)
+    .catch(this._reject);
   }
 
-  patch(body) {
-    return fetch(`${this._url}/users/me`, {
+  patch(url, body) {
+    return fetch(`${this._url}/${url}`, {
       method: 'PATCH',
       headers: {
         authorization: token,
@@ -30,15 +23,8 @@ export default class Api {
       },
       body: body
     })
-    .then((response) => {
-      if(response.ok) {
-        return response.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    .then(this._resolve)
+    .catch(this._reject);
   }
 
   post(body) {
@@ -49,16 +35,9 @@ export default class Api {
         'Content-Type': 'application/json'
       },
       body: body
-    })
-    .then((response) => {
-      if(response.ok) {
-        return response.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    })    
+    .then(this._resolve)
+    .catch(this._reject);
   }
 
   delete(url, id) {
@@ -68,15 +47,8 @@ export default class Api {
         authorization: token
       }
     })
-    .then((response) => {
-      if(response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status}`);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    .then(this._resolve)
+    .catch(this._reject);
   }
 
   put(id) {
@@ -86,14 +58,18 @@ export default class Api {
         authorization: token
       }
     })
-    .then((response) => {
-      if(response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status}`);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    .then(this._resolve)
+    .catch(this._reject)
+  }
+
+  _resolve(response) {
+    if(response.ok) {
+      return response.json();
+    }
+    return Promise.reject(`Ошибка: ${response.status}`)
+  }
+
+  _reject(err) {
+    console.log(err);
   }
 }
