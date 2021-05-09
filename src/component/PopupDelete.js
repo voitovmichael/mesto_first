@@ -8,7 +8,6 @@ export default class PopupDelete extends Popup {
   }
 
   _reject(err) {
-    this.changeButtonName(false);
     console.log(err);
   }
 
@@ -17,10 +16,10 @@ export default class PopupDelete extends Popup {
     this._fetchDelete(this._cardId)
     .then((data) => {
       this._card.remove();
-      this.changeButtonName(false);
       super.close();
     })
     .catch(this._reject.bind(this))
+    .finally(() => {this.changeButtonName(false);})
   }
 
   open(evt, id) {

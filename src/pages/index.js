@@ -62,9 +62,9 @@ const reject = (err) => {
 
 // запрашиваем информацию о пользвателе и получаем карточки 
 Promise.all([api.getUserInfo(), api.getCards()])
-.then((data) => {
-  userInfo.setUserInfo(data[0]);
-  section.renderItems(data[1]);
+.then(([userData, cardsData]) => {
+  userInfo.setUserInfo(userData);
+  section.renderItems(cardsData);
 })
 .catch(reject);
 
@@ -75,14 +75,12 @@ const popupEditForm = new PopupWithForm('.popup_type_edit', (inputValues) => {
   userInfo.setUserInfo(data);
   api.changeUserInfo(data)
   .then((data) => {
-    userInfo.setUserInfo(data);
-    popupEditForm.changeButtonName(false);
     popupEditForm.close();
   })
   .catch((err) => {
-    popupEditForm.changeButtonName(false);
     reject(err);
-  });
+  })
+  .finally(() => {popupEditForm.changeButtonName(false)});
 }, ESC_CODE);
 
 const profileValidator = new FormValidator(objFormParams, popupEditForm.getPopupForm());
@@ -107,13 +105,12 @@ const popupAddForm = new PopupWithForm('.popup_type_add', (inputValues) => {
     api.addCard(data)
     .then((response) => {
       createCard(response);
-      popupAddForm.changeButtonName(false);
       popupAddForm.close();
     })
     .catch((err) => {
-      popupAddForm.changeButtonName(false);
       reject(err);
     })
+    .finally(() => {popupAddForm.changeButtonName(false)})
 }, ESC_CODE);
 const addCardValidator = new FormValidator(objFormParams, popupAddForm.getPopupForm());
 addCardValidator.enableValidation();
@@ -131,14 +128,13 @@ const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', (inputValue
   api.changeAvatar(data)
   .then((data) => {
     userInfo.setUserInfo(data);
-    popupEditAvatar.changeButtonName(false);
     popupEditAvatar.close();
   })
   .catch((err) => {
-    popupEditAvatar.changeButtonName(false);
     reject(err);
   })
-});
+  .finally(() => {popupEditAvatar.changeButtonName(false)})
+}, ESC_CODE);
 
 const editAvatarValidator = new FormValidator(objFormParams, popupEditAvatar.getPopupForm());
 editAvatarValidator.enableValidation();
