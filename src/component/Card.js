@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, templateSelector, methods) {
+  constructor(data, templateSelector, methods, userId) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
@@ -8,7 +8,10 @@ export default class Card {
     this._openPopupDelete = methods.openPopupDelete;
     this._putLike = methods.putLike;
     this._deleteLike = methods.deleteLike;
+    this._userId = userId;
+    this._likes = data.likes;
     this._addListenters();
+    this._renderLike();
     if(data.likes) {
       this._elementLikeCount.textContent = data.likes.length;
     }
@@ -32,18 +35,27 @@ export default class Card {
     this._elementDeleteButton = this._element.querySelector('.element__delete-button');
   }
 
+  //метод отрисовывает проставленные лайки
+  _renderLike() {
+    this._likes.forEach((item) => {
+      if(item._id === this._userId) this._elementLike.classList.add('element__like_active');
+    })
+  }
+
   //метод для обработки нажатия на кнопку Like
  _clickLike (evt) {
    if(!evt.target.classList.contains('element__like_active')) {
      this._putLike(this._id).then((data) => {
        evt.target.classList.add('element__like_active');
        this._elementLikeCount.textContent = data.likes.length;
-     });
+     })
+     .catch(this._reject);
    } else {
-    this._deleteLike('cards/likes',this._id).then((data) => {
+    this._deleteLike(this._id).then((data) => {
       evt.target.classList.remove('element__like_active');
       this._elementLikeCount.textContent = data.likes.length;
-    });
+    })
+    .catch(this._reject);
    }
   }
 
@@ -59,14 +71,18 @@ export default class Card {
     this._elementDeleteButton.addEventListener('click', (evt) => this._deleteElement(evt));
   }
 
+  _reject(err) {
+    console.log(err);
+  }
+
   //Метод возвращает элемент карточки
   getElement() {
     return this._element;
   }
 
   //метод отрисовывает иконку удаления карточки
-  renderDeletIcon(userId) {
-    if(userId === this._ownerCardId || !this._ownerCardId) {
+  renderDeletIcon() {
+    if(this._userId === this._ownerCardId || !this._ownerCardId) {
       this._elementDeleteButton.classList.add('popup__close-button_active');
     }
   }

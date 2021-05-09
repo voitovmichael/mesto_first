@@ -45,14 +45,15 @@ toggleButtonState () {
 
 // метод навешивает слушателя с событием input на форму
 _setEventListener () {
-  if(this._formSaveButton)
+  if(this._formSaveButton) {
     this.toggleButtonState();
-    this._inputElementList.forEach((inputElement) => {
-    inputElement.addEventListener('input', () => {
-      this._checkInputInValid(inputElement);
-      this.toggleButtonState();
-    });
-  })
+  }
+  this._inputElementList.forEach((inputElement) => {
+  inputElement.addEventListener('input', () => {
+    this._checkInputInValid(inputElement);
+    this.toggleButtonState();
+  });
+})
 }
 
 //метод настраивает валидацию форм

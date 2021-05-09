@@ -1,10 +1,12 @@
 import Popup from './Popup.js'
 export default class PopupWithForm extends Popup{
-  constructor(selector, submitCallback) {
-    super(selector);
+  constructor(selector, submitCallback, ESC_CODE) {
+    super(selector, ESC_CODE);
     this._submitCallback = submitCallback;
     this._form = this._popup.querySelector('.popup__container');
     this._inputList = this._form.querySelectorAll('.popup__input');
+    this._buttonConfirm = this._popup.querySelector('.popup__confirm');
+    this._buttonConfirmText = this._buttonConfirm.textContent;
   }
 
   // метод возвращает объект со значениями input-ов формы
@@ -41,4 +43,10 @@ export default class PopupWithForm extends Popup{
     this._form.reset();
     super.close();
   }
+
+  //метод для отображения процесса запроса на сервер
+  changeButtonName(isRequest) {
+    this._buttonConfirm.textContent = isRequest ? 'Сохранение...' : this._buttonConfirmText;
+  }
+
 }

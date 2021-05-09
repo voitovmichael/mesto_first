@@ -1,13 +1,12 @@
-import { ESC_CODE } from '../utils/constants.js';
-
 export default class Popup {
-  constructor(selector) {
+  constructor(selector, ESC_CODE) {
     this._popup = document.querySelector(selector);
     this._handleEscClose = this._handleEscClose.bind(this);
-    this._buttonConfirm = this._popup.querySelector('.popup__confirm');
-    if(this._buttonConfirm) {
-      this._buttonConfirmText = this._buttonConfirm.textContent;
-    }
+    // this._buttonConfirm = this._popup.querySelector('.popup__confirm');
+    // if(this._buttonConfirm) {
+    //   this._buttonConfirmText = this._buttonConfirm.textContent;
+    // }
+    this._ESC_CODE = ESC_CODE;
   }
 
   // метод открытия popup
@@ -24,7 +23,7 @@ export default class Popup {
 
   // метод закртия popup через кнопку ESC
   _handleEscClose(evt) {
-    if(evt.keyCode === ESC_CODE) {
+    if(evt.keyCode === this._ESC_CODE) {
       this.close();
     }
   }
@@ -36,11 +35,6 @@ export default class Popup {
         this.close();
       }
     })
-  }
-
-  //метод для отображения процесса запроса на сервер
-  changeButtonName(isRequest) {
-    this._buttonConfirm.textContent = isRequest ? 'Сохранение...' : this._buttonConfirmText;
   }
 
 }

@@ -9,6 +9,10 @@ module.exports = {
     filename: 'main.js',
   },
 
+  devServer: {
+    open: true
+  },
+  
   module: {
     rules: [
 

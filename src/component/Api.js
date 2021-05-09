@@ -1,65 +1,80 @@
-import {token} from '../utils/constants.js';
 export default class Api {
   constructor(options) {
     this._url = options.url;
+    this._headers = options.headers
   }
 
-  get(url) {
-    return fetch(`${this._url}/${url}`, {
-      headers: {
-        authorization: token
-      }
+  getUserInfo() {
+    return fetch(`${this._url}/users/me`, {
+      headers: this._headers
     })
-    .then(this._resolve)
-    .catch(this._reject);
+    .then(this._resolve);
   }
 
-  patch(url, body) {
-    return fetch(`${this._url}/${url}`, {
+  getCards(url) {
+    return fetch(`${this._url}/cards`, {
+      headers: this._headers
+    })
+    .then(this._resolve);
+  }
+
+  changeUserInfo(data) {
+    return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: token,
-        'Content-Type': 'application/json'
-      },
-      body: body
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about
+      })
     })
-    .then(this._resolve)
-    .catch(this._reject);
+    .then(this._resolve);
   }
 
-  post(body) {
+  changeAvatar(data) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data.avatar
+      })
+    })
+    .then(this._resolve);
+  }
+
+  addCard(data) {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
-      headers: {
-        authorization: token,
-        'Content-Type': 'application/json'
-      },
-      body: body
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link
+      })
     })    
-    .then(this._resolve)
-    .catch(this._reject);
+    .then(this._resolve);
   }
 
-  delete(url, id) {
-    return fetch(`${this._url}/${url}/${id}`, {
+  deleteCard(id) {
+    return fetch(`${this._url}/cards/${id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: token
-      }
+      headers: this._headers
     })
-    .then(this._resolve)
-    .catch(this._reject);
+    .then(this._resolve);
   }
 
-  put(id) {
+  deleteLike(id) {
+    return fetch(`${this._url}/cards/likes/${id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+    .then(this._resolve);
+  }
+
+  addLike(id) {
     return fetch(`${this._url}/cards/likes/${id}`, {
       method: 'PUT',
-      headers: {
-        authorization: token
-      }
+      headers: this._headers
     })
-    .then(this._resolve)
-    .catch(this._reject)
+    .then(this._resolve);
   }
 
   _resolve(response) {
@@ -67,9 +82,5 @@ export default class Api {
       return response.json();
     }
     return Promise.reject(`Ошибка: ${response.status}`)
-  }
-
-  _reject(err) {
-    console.log(err);
   }
 }

@@ -1,17 +1,26 @@
 import Popup from "./Popup.js";
 export default class PopupDelete extends Popup {
-  constructor(selector, fetchDelete) {
-    super(selector);
-    this._popupConfirm = this._popup.querySelector('.popup__confirm');
+  constructor(selector, fetchDelete, ESC_CODE) {
+    super(selector, ESC_CODE);
     this._fetchDelete = fetchDelete;
+    this._buttonConfirm = this._popup.querySelector('.popup__confirm');
+    this._buttonConfirmText = this._buttonConfirm.textContent;
+  }
+
+  _reject(err) {
+    this.changeButtonName(false);
+    console.log(err);
   }
 
   deleteCard() {
-    this._fetchDelete('cards', this._cardId)
+    this.changeButtonName(true);
+    this._fetchDelete(this._cardId)
     .then((data) => {
       this._card.remove();
+      this.changeButtonName(false);
       super.close();
     })
+    .catch(this._reject.bind(this))
   }
 
   open(evt, id) {
@@ -21,8 +30,13 @@ export default class PopupDelete extends Popup {
   }
 
   setEventListeners() {
-    this._popupConfirm.addEventListener('click', this.deleteCard.bind(this));
+    this._buttonConfirm.addEventListener('click', this.deleteCard.bind(this));
     super.setEventListeners();
+  }
+  
+  //метод для отображения процесса запроса на сервер
+  changeButtonName(isRequest) {
+    this._buttonConfirm.textContent = isRequest ? 'Удаление...' : this._buttonConfirmText;
   }
 
 }
