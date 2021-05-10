@@ -74,7 +74,7 @@ const popupEditForm = new PopupWithForm('.popup_type_edit', (inputValues) => {
   const data = {name: inputValues['element-name'], about: inputValues['element-link']};
   api.changeUserInfo(data)
   .then((data) => {
-    userInfo.setUserInfo(data)
+    userInfo.setUserInfo(data);
     popupEditForm.close();
   })
   .catch((err) => {
