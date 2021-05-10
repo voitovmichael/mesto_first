@@ -72,9 +72,9 @@ Promise.all([api.getUserInfo(), api.getCards()])
 const popupEditForm = new PopupWithForm('.popup_type_edit', (inputValues) => {
   popupEditForm.changeButtonName(true);
   const data = {name: inputValues['element-name'], about: inputValues['element-link']};
-  userInfo.setUserInfo(data);
   api.changeUserInfo(data)
   .then((data) => {
+    userInfo.setUserInfo(data)
     popupEditForm.close();
   })
   .catch((err) => {
