@@ -1,5 +1,5 @@
 https://voitovmichael.github.io/mesto/
-# Проект 4: Место
+# mesto
 
 ## О чем этот проект?
 	Проект носит учебный характер.
